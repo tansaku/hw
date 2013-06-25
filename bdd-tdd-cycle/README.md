@@ -1,13 +1,10 @@
 BDD, TDD Cycle
 ===
 
-In this assignment you will use a combination of Behavior-Driven Design (BDD) and Test-Driven Development (TDD) with the Cucumber and RSpec tools to add a new feature to a SaaS app, and deploy the resulting app on Heroku.
+In this assignment you will use a combination of Behavior-Driven Design (BDD) and Test-Driven Development (TDD) with the Cucumber and RSpec tools to 
+add a "find movies with same director" feature to RottenPotatoes, and deploy the resulting app on Heroku.
 
-**Adding director info to RottenPotatoes**
-
-In this assignment you'll use BDD & TDD to add a "find movies with same director" feature to RottenPotatoes.  
-
-You can start from your HW 3 solution, or from the repo saasbook/hw4_rottenpotatoes on GitHub.  (If you choose to do the latter, you should fork the repo and then clone from your own fork, so that you can push your own changes to your copy of the repo on GitHub. Remember to make your repository private.)
+To get the initial RottenPotatoes code, you can either fork this repo or start from a previous working repo containing RottenPotatoes.
 
 **Preparation: Setup of Cucumber and RSpec**
 
