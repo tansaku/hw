@@ -10,7 +10,7 @@ Part 1 -> Setup GitHub and Heroku
 
 2) Sign Up for a free Heroku account at -- https://id.heroku.com/signup and again follow the instructions given on their site to create you account.
 
-3) Set up GitHub with you VM (https://help.github.com/articles/set-up-git).
+3) Set up GitHub on you VM (https://help.github.com/articles/set-up-git).
 
   * Add your email and name to the git config
 
