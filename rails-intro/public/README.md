@@ -1,19 +1,35 @@
-Rails Intro
-===
+Rails Intro: Add Features to RottenPotatoes
+===========================================
 
-In this homework you will clone a GitHub repo containing an existing simple Rails app, add a feature to the app, and deploy the result publicly on the Heroku platform.  We will run live integration tests against your deployed version.
+In this homework you will clone a GitHub repo containing an existing
+simple Rails app, add a feature to the app, and deploy the result
+publicly on the Heroku platform.  We will run live integration tests
+against your deployed version. 
 
-General advice:  This homework involves modifying RottenPotatoes in various ways.  Git is your friend: commit frequently in case you inadvertently break something that was working before!  That way you can always back up to an earlier revision, or just visually compare what changed in each file since your last "good" commit.
+General advice:  This homework involves modifying RottenPotatoes in
+various ways.  Git is your friend: commit frequently in case you
+inadvertently break something that was working before!  That way you can
+always back up to an earlier revision, or just visually compare what
+changed in each file since your last "good" commit. 
 
-Remember, commit early and often!
+*Remember, commit early and often!*
 
-Preparation: this assigment assumes that you have a working version of RottenPotatoes running locally, checked into GitHub, and deployed on Heroku.  If any of these are not the case, you'll need to make it so before proceeding.  The ESaaS Getting Started With GitHub and Heroku assignment is one way to do it.
+Preparation: this assigment assumes that you have a working version of
+RottenPotatoes running locally, checked into GitHub, and deployed on
+Heroku.  If any of these are not the case, you'll need to make it so
+before proceeding.  The ESaaS Getting Started With GitHub and Heroku
+assignment is one way to do it. 
 
-** Note on submission **
+### Note on submission
 
-You may work in pairs on parts 1-3 as long as each student deploys the result separately on her own Heroku account.  The changes you must make in parts 1-3 are cumulative, so when all done, you should deploy your working version to Heroku.  We will test the features in each part separately, so you WILL get partial credit if you have a subset of the features working.
+You may work in pairs on parts 1-3 as long as each student deploys the
+result separately on her own Heroku account.  The changes you must make
+in parts 1-3 are cumulative, so when all done, you should deploy your
+working version to Heroku.  We will test the features in each part
+separately, so you WILL get partial credit if you have a subset of the
+features working. 
 
-** Part 1: sorting the list of all movies **
+# Part 1: sorting the list of all movies
 
 Enhance RP in the following way: 
 
@@ -57,7 +73,7 @@ do the work for you.
 collection itself--its job is just to show stuff.  The controller should
 spoon-feed the view exactly what is to be displayed. 
 
-** Part 2: Filter the list of movies **
+# Part 2: Filter the list of movies
 
 Enhance RottenPotatoes as follows.  At the top of the All Movies listing, add some checkboxes that allow the user to filter the list to show only movies with certain MPAA ratings:
 
@@ -145,7 +161,7 @@ in the controller that remembers which ratings were actually used to do
 the filtering, and make that variable available to the view so that the
 appropriate  boxes can be pre-checked when the index view is reloaded. 
 
-** Part 3: Remember the sorting and filtering settings **
+# Part 3: Remember the sorting and filtering settings 
 
 OK, so the user can now click on the "Movie Title" or "Release Date"
 headings and see movies sorted by those columns, and can additionally
@@ -193,7 +209,7 @@ your additional redirect will delete that message and it will never
 appear, since the `flash[]` only survives across a single redirect.  To
 fix this, use `flash.keep` right before your additional redirect. 
 
-### TURNIN:
+# How to submit:
 
 Deploying your finished app to Heroku by the homework deadline is part
 of the grading process.  Even if you have code checked in that works
