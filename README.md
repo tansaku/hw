@@ -20,4 +20,6 @@ include a `.rspec` file so that `autotest` works out-of-the-box)
 using the RSpec-based autograder, `solutions/spec` might contain the
 spec files.
 
-`config.yml` - configuration info for the OpenEdX autograders
+`autograder/` - all files needed for the OpenEdX autograders to grade
+this homework (varies depending on grader strategy and homework content)
+
