@@ -1,7 +1,7 @@
 require 'currency_conversion'
 require 'debugger'
 
-describe 'Currency conversion' do
+describe 'Currency conversion', :pending => true do
   it 'converts rupee (singular) to dollars' do
     2.rupee.in(:dollar).should be_between(0.037, 0.039)
   end
