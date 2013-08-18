@@ -1,0 +1,12 @@
+---
+  # Human-readable name of this question/assignment
+  human_name: Fun With Palindromes
+  # 'git' section not needed if you're provisioning a server running autograder
+  git_autograder:
+    repo: git@github.com:saasbook/rag.git
+    # ref to use (branch, tag, etc); can omit if 'master:HEAD'
+    ref: master
+  
+
+
+
