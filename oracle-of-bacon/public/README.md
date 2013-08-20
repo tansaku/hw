@@ -70,6 +70,24 @@ joining them together with '&'  (Rails has this as a utility...)
   result.type == multiple_match:  
    result.matches = ['actor 1', 'actor 2', 'actor 3']
 
+Hints for this step: 
+
+* `zip` interleaves the element of its receiver with those of its
+argument, using `nil` to pad if the first array is longer than the
+second; that is, `[:a,:b,:c].zip([1,2])==[[:a,1],[:b,2],[:c,nil]]`
+
+* `flatten` takes an array that includes arbitrarily nested arrays and
+flattens them into a single array with no nested arrays, that is,
+`[[:a,1],[:b,2],[:c,nil]].flatten==[:a,1,:b,2,:c,nil]` 
+
+* `compact` removes nil elements from a collection, that is,
+`[:a,1,:c,nil].compact==[:a,1,:c]`
+
+* The `text` method on a `Nokogiri::XML::Node` returns the actual text
+content of that node.  That is, if `node == <actor>Carrie
+Fisher</actor>`, then `node.text == "Carrie Fisher"`.
+
+
 - Create OracleOfBacon instance method:
   @oracle.connect(:from => '', :to => '')
   if either From or To omitted, assumes Bacon
