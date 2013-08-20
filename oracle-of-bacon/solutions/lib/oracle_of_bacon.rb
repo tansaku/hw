@@ -1,8 +1,8 @@
 require 'debugger'              # optional, may be helpful
-require 'open-uri'
-require 'cgi'
-require 'nokogiri'
-require 'active_model'
+require 'open-uri'              # allows open('http://...') to return body
+require 'cgi'                   # for escaping URIs
+require 'nokogiri'              # XML parser
+require 'active_model'          # for validations
 
 class OracleOfBacon
 
@@ -35,12 +35,20 @@ class OracleOfBacon
   def find_connections
     raise InvalidError unless self.valid?
     uri = make_uri_from_arguments
-    xml = open(uri)
-    self.response = Response.new(xml)
+    begin
+      xml = URI.parse(uri).read
+    rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
+      Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError,
+      Net::ProtocolError => e
+      # convert all of these into a generic OracleOfBacon::NetworkError,
+      #  but keep the original error message
+      raise NetworkError, e.message
+    end
+    @response = Response.new(xml)
   end
 
   def make_uri_from_arguments
-    'http://oracleofbacon.org/cgi-bin/xml?p=' + CGI.escape(@api_key) +
+    'http://oracleofbacon.org/cgi-bin/xml?p=' + CGI.escape(api_key) +
       '&a=' + CGI.escape(from) +
       '&b=' + CGI.escape(to)
   end

@@ -43,7 +43,79 @@ is in the picture below, to avoid having it indexed by search engines:
 
 ![Image of API key](./api_key.png)
 
+We've provided a code skeleton and a reasonable (but not exhaustive) set
+of specs for this assignment.  The assignment has 4 parts; each part has
+its own specs in a `describe` group.  Initially, all specs are marked
+`:pending => true` so you don't get a rash of failing tests when you
+start the assignment; when you start work on any one part of the
+assignment, remove the pending option from the describe block, watch the
+group of tests fail, and then start writing the code to make them pass.
+(This is a crude version of the Test-Driven Development methodology we
+embrace later in the course; in the full version of TDD, you will write
+your own tests one at a time, watching each one fail and then creating
+the code to make it pass.)
 
+# Part 0: Background (no submission needed)
+
+A minimal RESTful query URI for OOB must include the API key (parameter
+`p`), the actor from which to start search (parameter `a`), and
+optionally the actor to connect to (optional parameter `b`; defaults to
+Kevin Bacon if omitted).
+
+Remember that special characters in URIs must be
+escaped and that one such special character is a space, which may be
+replaced by `+` in a URI.  Thus valid queries might be (if you
+replace `my_key` with the valid API key above):
+
+    http://oracleofbacon.org/cgi-bin/xml?p=my_key&a=Laurence+Olivier
+
+which connects Laurence Olivier with Kevin Bacon, or
+
+    http://oracleofbacon.org/cgi-bin/xml?p=my_key&a=Carrie+Fisher&b=Ian+McKellen
+
+which connects Carrie Fisher to Ian McKellen.
+
+* Visually inspect the XML returned for each of the above queries.  You
+can view it by typing the URIs into a browser, or better, by using a
+command-line tool such as `curl`.   What kinds of XML elements are
+present in the response?
+
+If there are multiple matches for an actor name, you'll get a list of
+similar names so you can resubmit your query with an exact match.  For
+example, try doing a query connecting Anthony Perkins to anyone.
+
+* Visually inspect the XML returned.  How are the element types
+different from those for a normal response?
+
+Finally, if you submit a request whose URI does not include a valid API
+key, you'll get a third type of response, informing you that the access
+was unauthorized.
+
+* Visually inspect the XML returned.  How does it differ from the
+previous two responses?
+
+In the rest of this assignment you'll create a Ruby wrapper library to
+make it easier to use the Oracle of Bacon.  With our new library, we'd
+be able to run the above three examples as follows (again replacing
+`my_api_key` with the valid key given previously).  (Note that your
+responses may differ slightly, as there is often more than one way to
+connect two actors together and the Oracle of Bacon returns one chosen
+randomly.) 
+
+    oob = OracleOfBacon.new('my_api_key')
+    oob.from = 'Laurence Olivier'
+    oob.find_connections
+    oob.response.type      # => :graph
+    oob.response.data      # => ['Kevin Bacon', 'The Big Picture (1989)', 'Eddie Albert (I)', 'Carrie (1952)', 'Laurence Olivier']
+    # try connecting Carrie Fisher to Ian McKellen
+    oob.from = 'Carrie Fisher'
+    oob.to = 'Ian McKellen'
+    oob.find_connections
+    oob.response.data      # => ['Ian McKellen', 'Doogal (2006)', 
+    
+
+
+# Part 1: 
 
 
 - Marshal arguments into a URI query string using CGI.escape(str) and
@@ -87,6 +159,12 @@ flattens them into a single array with no nested arrays, that is,
 content of that node.  That is, if `node == <actor>Carrie
 Fisher</actor>`, then `node.text == "Carrie Fisher"`.
 
+
+## Troubleshooting
+
+*  `autotest` *appears to do nothing?*  Check that you are running it in
+the code's root directory (the one that has `lib` and `spec` as subdirectories)
+and that the `.rspec` file exists in this root directory.
 
 - Create OracleOfBacon instance method:
   @oracle.connect(:from => '', :to => '')

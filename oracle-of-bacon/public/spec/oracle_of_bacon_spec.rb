@@ -1,11 +1,11 @@
-load '../solutions/lib/oracle_of_bacon.rb'
+require 'oracle_of_bacon'
 
 require 'fakeweb'
 require 'debugger'
 
 describe OracleOfBacon do
   before(:all) { FakeWeb.allow_net_connect = false }
-  describe 'validations' do
+  describe 'instance' do
     before(:each) { @orb = OracleOfBacon.new('fake_api_key') }
     describe 'when new' do
       subject { @orb }
@@ -55,9 +55,21 @@ describe OracleOfBacon do
       its(:data) { should include('Anthony Perkins (I)') }
       its(:data) { should include('Anthony Parkin') }
     end
-
   end
-      
+  describe 'constructing URI' do
+    before(:each) do
+      oob = OracleOfBacon.new('fake_key')
+      oob.from = '3%2 "a'
+      oob.to = 'George Clooney'
+      @uri = oob.make_uri_from_arguments
+    end
+    it 'should escape special characters in values' do
+      @uri.should match(URI::regexp)
+    end
+    it 'should include API key' do
+      @uri.should match /p=fake_key/
+    end
+  end
   describe 'successful service connection response' do
     def fake_response_using(file)
       @body = File.read file
@@ -65,9 +77,9 @@ describe OracleOfBacon do
     end
     it 'should create XML from the response' do
       fake_response_using 'spec/graph_example.xml'
-      OracleOfBacon::Response.should_receive(:new).with(@body)
       @oob = OracleOfBacon.new
       @oob.stub!(:valid?).and_return(true)
+      OracleOfBacon::Response.should_receive(:new).with(@body)
       @oob.find_connections
     end      
   end
