@@ -1,5 +1,4 @@
-#require 'oracle_of_bacon'
-load '../solutions/lib/oracle_of_bacon.rb'
+require 'oracle_of_bacon'
 
 require 'fakeweb'
 require 'debugger'

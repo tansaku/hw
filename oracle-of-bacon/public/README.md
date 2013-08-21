@@ -63,7 +63,7 @@ page](http://oracleofbacon.org/xmltest.html), but you will need to
 provide an API key.  The key provided for using the API in this course
 is in the picture below, to avoid having it indexed by search engines:
 
-![Image of API key](./api_key.png)
+![Image of API key](oob_api_key.png)
 
 *Please respect the Oracle's maintainers by not using this key for any
 purpose other than doing this assignment.*
