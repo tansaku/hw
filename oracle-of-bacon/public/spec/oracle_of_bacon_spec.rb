@@ -1,4 +1,5 @@
-require 'oracle_of_bacon'
+#require 'oracle_of_bacon'
+load '../solutions/lib/oracle_of_bacon.rb'
 
 require 'fakeweb'
 require 'debugger'
@@ -36,7 +37,7 @@ describe OracleOfBacon do
       end
     end
   end
-  describe 'parsing xml response' do
+  describe 'parsing XML response' do
     describe 'for unauthorized access/invalid API key' do
       subject { OracleOfBacon::Response.new(File.read 'spec/unauthorized_access.xml') }
       its(:type) { should == :error }
@@ -55,33 +56,41 @@ describe OracleOfBacon do
       its(:data) { should include('Anthony Perkins (I)') }
       its(:data) { should include('Anthony Parkin') }
     end
+    describe 'for unknown response' do
+      subject { OracleOfBacon::Response.new(File.read 'spec/unknown.xml') }
+      its(:type) { should == :unknown }
+      its(:data) { should match /unknown/i }
+    end
   end
   describe 'constructing URI' do
-    before(:each) do
+    subject do
       oob = OracleOfBacon.new('fake_key')
-      oob.from = '3%2 "a'
-      oob.to = 'George Clooney'
-      @uri = oob.make_uri_from_arguments
+      oob.from = '3%2 "a' ; oob.to = 'George Clooney'
+      oob.make_uri_from_arguments
+      oob.uri
     end
-    it 'should escape special characters in values' do
-      @uri.should match(URI::regexp)
-    end
-    it 'should include API key' do
-      @uri.should match /p=fake_key/
-    end
+    it { should match(URI::regexp) }
+    it { should match /p=fake_key/ }
+    it { should match /b=George\+Clooney/ }
+    it { should match /a=3%252\+%22a/ }
   end
-  describe 'successful service connection response' do
-    def fake_response_using(file)
-      @body = File.read file
-      FakeWeb.register_uri(:get, %r(http://oracleofbacon\.org), :body => @body)
-    end
-    it 'should create XML from the response' do
-      fake_response_using 'spec/graph_example.xml'
+  describe 'service connection' do
+    before(:each) do
       @oob = OracleOfBacon.new
-      @oob.stub!(:valid?).and_return(true)
-      OracleOfBacon::Response.should_receive(:new).with(@body)
+      @oob.stub(:valid?).and_return(true)
+    end
+    it 'should create XML if valid response' do
+      body = File.read 'spec/graph_example.xml'
+      FakeWeb.register_uri(:get, %r(http://oracleofbacon\.org), :body => body)
+      OracleOfBacon::Response.should_receive(:new).with(body)
       @oob.find_connections
-    end      
+    end
+    it 'should raise OracleOfBacon::NetworkError if network problem' do
+      FakeWeb.register_uri(:get, %r(http://oracleofbacon\.org),
+        :exception => Timeout::Error)
+      lambda { @oob.find_connections }.
+        should raise_error(OracleOfBacon::NetworkError)
+    end
   end
 
 end
